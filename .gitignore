@@ -1,0 +1,10 @@
+#git add -f <file> 強制加入忽略的檔案
+#$ git clean -fX 清除忽略的檔案
+*sublime*
+bot.elhomeo.com/.well-known
+bot.elhomeo.com/cgi-bin
+bot.elhomeo.com/includes
+bot.elhomeo.com/line-bot-sdk-php
+bot.elhomeo.com/temp
+.htaccess
+error_log
