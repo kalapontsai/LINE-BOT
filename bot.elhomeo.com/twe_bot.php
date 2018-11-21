@@ -19,27 +19,37 @@ foreach ($client->parseEvents() as $event) {
             $message = $event['message'];
             switch ($message['type']) {
                 case 'text':
+                    if (!preg_match("/^[\x{4e00}-\x{9fa5}A-Za-z0-9]+$/u", $message['text'])) { //http://www.phpernote.com/php-regular-expression/1332.html
+                        $msg_reply = array(array('type' => 'text','text' => "關鍵字有空格或標點符號,請重新輸入😁" ));
+                        $total_reply = array('replyToken' => $event['replyToken'],'messages' => $msg_reply);
+                        $client->replyMessage($total_reply);
+                        break;
+                    }
                     // 將Google表單轉成JSON資料
                     $json = file_get_contents(GOOGLEDATASPI);
-                    $data = json_decode($json, true);           
+                    $data = json_decode($json, true);
                     $acc = 0;
+                    $total_result = '';
                     $msg_reply = array(array('type' => 'text','text' => '查詢['.$message['text'].']'));
-                    // 資料起始從feed.entry          
+                    // 資料起始從feed.entry
                     foreach ($data['feed']['entry'] as $item) {
                         if (mb_strpos($item['gsx$keyword']['$t'],strtolower($message['text']) ) !== false) {  //=== 和 !== 只有在相同类型下,才会比较其值                     
-                            array_push($msg_reply,array('type' => 'text','text' => ('全名:' . $item['gsx$fullname']['$t'] 
-                                . "\r\n中文:" . $item['gsx$keywordzh']['$t'] . "\r\n" . $item['gsx$note1']['$t'] 
-                                . "\r\n" . $item['gsx$productsid']['$t'])));
-                            //break;
+                            $total_result .= '全名:' . $item['gsx$fullname']['$t'] 
+                                            . "\r\n中文:" . $item['gsx$keywordzh']['$t']
+                                            . "\r\n" . $item['gsx$note1']['$t'] 
+                                            . "\r\n" . $item['gsx$productsid']['$t'] . "\r\n---\r\n";
                             $acc += 1;
-                            if ($acc > 3) {
-                                array_push($msg_reply,array('type' => 'text','text' => "搜尋結果太多,僅列出前三種\r\n請改用其他方式查詢!!"));
+                            if ($acc >= 10) {
+                                $total_result .= "搜尋結果太多,僅列出前十種\r\n請縮小關鍵字範圍😅";
                                 break;
                             }
                         }
                     }
                     if ($acc == 0) {
-                        array_push($msg_reply,array('type' => 'text','text' => '查無結果,請改用其他方式查詢!!'));
+                        array_push($msg_reply,array('type' => 'text','text' => '查無結果,請改用其他方式查詢😅'));
+                    }
+                    else {
+                        array_push($msg_reply,array('type' => 'text','text' => $total_result));
                     }
                     $total_reply = array('replyToken' => $event['replyToken'],'messages' => $msg_reply);
                     $client->replyMessage($total_reply);
