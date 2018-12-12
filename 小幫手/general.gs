@@ -1,9 +1,9 @@
 // 20181204 revision init
-var CHANNEL_ACCESS_TOKEN = 'jZh9Peu7uqaHQVIRC3T738gW+gH3xw8ABD7XUxpCD2cNZIQnJY8hNZmNqfbivb7Txv285Dksk2i2ziK8iudL2iav/vCzeCTiDzvbBMAlsw7hz38+Hr4B2s0NQ0opZzWJZZlTUSlRsnked3fgbhnq4wdB04t89/1O/w1cDnyilFU=';
-var id_sheet_url = 'https://docs.google.com/spreadsheets/d/1efo1LkkhYpAgIU8mfcEGeXRzK2i2XCTvVd2VfwR-ez0/edit?usp=sharing';
+var CHANNEL_ACCESS_TOKEN = 'LINE CHANNEL_ACCESS_TOKEN';
+var id_sheet_url = 'id spreadsheet link';
 var AQI_url = 'https://opendata.epa.gov.tw/ws/Data/AQI/?$format=json';
 var AQI_row = JSON.parse(UrlFetchApp.fetch(AQI_url));
-var acccca_url = 'https://docs.google.com/spreadsheets/d/1-WhjYPf2PHuRZIDDi51I8XakOvgp_YOPACza2Liu0iU/edit?usp=sharing'
+var acccca_url = 'acca spreadsheet link'
 
 //抓取IP位置
 function doGet(e) {
