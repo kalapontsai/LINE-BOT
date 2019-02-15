@@ -14,33 +14,6 @@ $client = new LINEBotTiny(CHANNELACCESSTOKEN, CHANNELSECRET);
 $json_string = file_get_contents('visit_account.json');
 $visit_data = json_decode($json_string, true);
 
-function get_ShortUrl($url)
-    {
-        // content example for LINE BOT
-        $content = [
-           'replyToken' => $event['replyToken'],
-           'messages' => [
-               [
-                   'type' => 'text',
-                   'text' => $message
-               ]
-           ]
-        ];
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://www.googleapis.com/urlshortener/v1/url");
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); // 在嘗試連接時等待的秒數。設置為 0，則無限等待。
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 允許 cURL 函數執行的最長秒數。
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // TRUE 將 curl_exec() 獲取的信息以字符串返回，而不是直接輸出。
-        // 抓取 URL 並把它傳遞給瀏覽器
-        $ret = curl_exec($ch);
-        $json_url = json_decode($ret, true);
-        // 關閉 cURL 資源，並且釋放系統資源
-        curl_close($ch);
-        return $json_url
-    }
 
 
 // 取得事件(只接受文字訊息)

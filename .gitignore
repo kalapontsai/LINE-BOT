@@ -1,5 +1,6 @@
 #git add -f <file> 強制加入忽略的檔案
 #$ git clean -fX 清除忽略的檔案
+#子目錄名/  忽略任何名稱相符的子目錄
 *sublime*
 .well-known/
 cgi-bin/

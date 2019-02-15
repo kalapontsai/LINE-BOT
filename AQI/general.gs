@@ -77,12 +77,13 @@ function ProcMsg(message,id)
       
       else if (cmd1 == 'home')
       {
-          var TS_data = JSON.parse(UrlFetchApp.fetch('https://api.thingspeak.com/channels/73772/feeds.json?results=2'));
-          var t_time = TS_data.feeds[1].created_at;
-          var temp = TS_data.feeds[1].field6.replace("\r\n\r\n", "");
-          var humi = TS_data.feeds[1].field2;
-          var pm = TS_data.feeds[1].field3;
-        feed_txt = '溫度 : ' + temp + '\r\n濕度 : ' + humi + '\r\nPM2.5 : ' + pm + '\r\n\r\nTime : ' + t_time;
+          var TS_data = JSON.parse(UrlFetchApp.fetch('https://api.thingspeak.com/channels/73772/feeds.json?results=1&offset=8'));
+          var t_time = TS_data.feeds[0].created_at;
+          var temp = TS_data.feeds[0].field6.replace("\r\n\r\n", "");
+          var humi = TS_data.feeds[0].field2;
+          var pm25 = TS_data.feeds[0].field3;
+          var pm100 = TS_data.feeds[0].field4;
+        feed_txt = '溫度: ' + temp + '\r\n濕度: ' + humi + '\r\nPM2.5: ' + pm25 + '\r\nPM10: ' + pm100 + '\r\nTime: ' + t_time;
       }
 
       else if (cmd1 == 'roll')
