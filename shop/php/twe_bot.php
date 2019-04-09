@@ -40,7 +40,7 @@ foreach ($client->parseEvents() as $event) {
 
 
 
-                    if (!preg_match("/^[\x{4e00}-\x{9fa5}A-Za-z0-9]+$/u", $message['text'])) { //http://www.phpernote.com/php-regular-expression/1332.html
+                    if (!preg_match("/^[\x{4e00}-\x{9fa5}A-Za-z0-9#-*]+$/u", $message['text'])) { //http://www.phpernote.com/php-regular-expression/1332.html
                         $msg_reply = array(array('type' => 'text','text' => "關鍵字有空格或標點符號,請重新輸入😁" ));
                         $total_reply = array('replyToken' => $event['replyToken'],'messages' => $msg_reply);
                         $client->replyMessage($total_reply);
