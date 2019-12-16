@@ -5,6 +5,7 @@
  sheet name: elhomeo_bot
  link : https://spreadsheets.google.com/feeds/list/141hxYb013q-5JbJVJAR1bSKvchQrT86Ido4fu2z1Fvk/od6/public/values?alt=json
  20181128: add visit account log to json file, and some keyword for Line BOT
+ 20191216: modify error log file and add some feedback when user senf sticker or another message type
  ***************************************/
 
 require_once('./LINEBotTiny.php');
@@ -71,14 +72,20 @@ foreach ($client->parseEvents() as $event) {
                     }
                     else {
                         array_push($msg_reply,array('type' => 'text','text' => $total_result));
+                        error_log('['.date('Y-M-d H:m:s').']'."query text : " . $message['text'] . "\n", 3, "twe_bot.log");
                     }
-                break;
+                    break;
                 default:
-                    error_log("Unsupporeted message type: " . $message['type']);
+                    $msg_reply = array(array('type' => 'text','text' => "抱歉,只接受文字類訊息" ));
+                    error_log('['.date('Y-M-d H:m:s').']'."Unsupporeted message type: " . $message['type'] . "\n", 3, "twe_bot.log");
                     break;
             } //EOF switch ($message['type'])
             $total_reply = array('replyToken' => $event['replyToken'],'messages' => $msg_reply);
             $client->replyMessage($total_reply);
+            break;
+        default:
+            error_log('['.date('Y-M-d H:m:s').']'."Unsupporeted event type: " . $event['type'] . "\n", 3, "twe_bot.log");
+            break;
     } //EOF switch ($event['type'])
 }; //EOF foreach ($client->parseEvents() as $event)
 $fp = fopen('visit_account.json', 'w');
