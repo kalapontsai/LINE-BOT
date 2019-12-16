@@ -3,7 +3,7 @@
 /****************************************
  ref https://superlevin.tw/使用azurephpgoogle試算表建置line回應機器人/
  sheet name: elhomeo_bot
- link : https://spreadsheets.google.com/feeds/list/141hxYb013q-5JbJVJAR1bSKvchQrT86Ido4fu2z1Fvk/od6/public/values?alt=json
+ 
  20181128: add visit account log to json file, and some keyword for Line BOT
  20191216: modify error log file and add some feedback when user senf sticker or another message type
  ***************************************/
